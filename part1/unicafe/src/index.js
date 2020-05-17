@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import Reset from "./reset";
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
@@ -7,7 +8,7 @@ const History = ({ allClicks }) => {
   if (allClicks.length === 0) {
     return <div>the app is used by pressing the buttons.</div>;
   }
-
+  debugger;
   if (allClicks.length > 0) {
     return <div>Clicks history: {allClicks.join(" ")}</div>;
   }
@@ -32,6 +33,7 @@ const App = props => {
 
   return (
     <div>
+      <Reset />
       <div>
         {clicks.left}
         <Button onClick={handleLeftClick} text="left" />
