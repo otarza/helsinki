@@ -1,46 +1,56 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import Reset from "./reset";
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+const FeedbackControls = ({
+  handleGoodClick,
+  handleNeutralClick,
+  handleBadClick
+}) => (
+  <div>
+    <h1> Give Feedback </h1>
+    <button onClick={handleGoodClick}> good </button>
+    <button onClick={handleNeutralClick}> neutral </button>
+    <button onClick={handleBadClick}> bad </button>
+  </div>
+);
 
-const History = ({ allClicks }) => {
-  if (allClicks.length === 0) {
-    return <div>the app is used by pressing the buttons.</div>;
-  }
-  debugger;
-  if (allClicks.length > 0) {
-    return <div>Clicks history: {allClicks.join(" ")}</div>;
+const FeedbackStatistics = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad;
+  if (good === 0 && neutral === 0 && bad === 0) {
+    return (
+      <div>
+        <h1> Statistics </h1>
+        No feedback given
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1> Statistics </h1>
+        <div> good {good}</div>
+        <div> neutral {neutral}</div>
+        <div> bad {bad}</div>
+        <div> all {total}</div>
+        <div> avarage {(good - bad) / total}</div>
+        <div> positive {(good / total) * 100} %</div>
+      </div>
+    );
   }
 };
 
 const App = props => {
-  const [clicks, setClicks] = useState({
-    left: 0,
-    right: 0
-  });
-  const [allClicks, setAll] = useState([]);
-
-  const handleLeftClick = () => {
-    debugger;
-    setAll(allClicks.concat("L"));
-    setClicks({ ...clicks, left: clicks.left + 1 });
-  };
-  const handleRightClick = () => {
-    setAll(allClicks.concat("R"));
-    setClicks({ ...clicks, right: clicks.right + 1 });
-  };
+  const [neutral, setNeutral] = useState(0);
+  const [good, setGood] = useState(0);
+  const [bad, setBad] = useState(0);
 
   return (
     <div>
-      <Reset />
-      <div>
-        {clicks.left}
-        <Button onClick={handleLeftClick} text="left" />
-        <Button onClick={handleRightClick} text="right" />
-        {clicks.right}
-        <History allClicks={allClicks} />
-      </div>
+      <FeedbackControls
+        handleGoodClick={() => setGood(good + 1)}
+        handleNeutralClick={() => setNeutral(neutral + 1)}
+        handleBadClick={() => setBad(bad + 1)}
+      />
+      <FeedbackStatistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
