@@ -14,6 +14,18 @@ const FeedbackControls = ({
   </div>
 );
 
+const Statistic = ({ text, value }) => <div> {`${text} ${value}`} </div>;
+
+const Statistics = ({ good, neutral, bad }) => {
+  return (
+    <div>
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+    </div>
+  );
+};
+
 const FeedbackStatistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad;
   if (good === 0 && neutral === 0 && bad === 0) {
@@ -27,9 +39,7 @@ const FeedbackStatistics = ({ good, neutral, bad }) => {
     return (
       <div>
         <h1> Statistics </h1>
-        <div> good {good}</div>
-        <div> neutral {neutral}</div>
-        <div> bad {bad}</div>
+        <Statistics good={good} neutral={neutral} bad={bad} />
         <div> all {total}</div>
         <div> avarage {(good - bad) / total}</div>
         <div> positive {(good / total) * 100} %</div>
