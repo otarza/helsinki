@@ -17,6 +17,8 @@ const App = () => {
     setFilteredName(event.target.value);
   };
 
+  const hello = React.useState(initialState);
+
   return (
     <div>
       <h2>Phonebook</h2>
